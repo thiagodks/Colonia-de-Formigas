@@ -84,7 +84,7 @@ class Graph:
 		if self.best_global == None or (self.best_solution.fitness < self.best_global.fitness):
 			self.best_global = Ant()
 			self.best_global.fitness = self.best_solution.fitness
-			self.best_global.route = self.best_solution.route
+			self.best_global.route = self.best_solution.route 
 		self.log_itr.append((self.best_solution.fitness, self.avg_fitness, self.median_fitness))
 
 	def clear_routes(self):
