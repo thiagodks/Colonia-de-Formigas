@@ -15,7 +15,7 @@ def get_args():
 	return args
 
 def plot_results(results, args):
-	results.sort(key=lambda x: x[0].best_solution.fitness)
+	results.sort(key=lambda x: x[0].best_global.fitness)
 	plot_graphics(results[0][0], results[0][1], name_save='best_solution_')
 	plot_graphics(results[-1][0], results[-1][1], name_save='worst_solution_')
 	file_name = args['f'].split("/")
@@ -34,7 +34,7 @@ def plot_graphics(graph, parameters, name_save=""):
 	plt.rcParams.update({'font.size': 20})
 	plt.subplots_adjust(left=0.04, right=0.85, top=0.85)
 	plt.gcf().text(0.86, 0.25, (graph.get_parameters() + 
-					 '\n\n-----------------------------------------\n\n Melhor Fitness: ' + str (graph.best_solution.fitness) +
+					 '\n\n-----------------------------------------\n\n Melhor Fitness: ' + str (graph.best_global.fitness) +
 					 '\n\n Media Fitness: %.2f' % graph.avg_fitness +
 					 '\n\n Mediana Fitness: %.2f' % graph.median_fitness), fontsize=16)
 
@@ -49,7 +49,7 @@ def plot_graphics(graph, parameters, name_save=""):
 	ax1.set_title("Melhores fitness")
 	ax1.set_xlabel("Iterações", fontsize='medium')
 	ax1.set_ylabel("Fitness", fontsize='medium')
-	ax1.plot(list(range(0, parameters['MAX_ITR'], step)), best_ger_step, 'g--', label='Melhor Fitness: ' + str (graph.best_solution.fitness))
+	ax1.plot(list(range(0, parameters['MAX_ITR'], step)), best_ger_step, 'g--', label='Melhor Fitness: ' + str (graph.best_global.fitness))
 	ax1.legend(ncol=3)
 	ax1.tick_params(labelsize=18)
 
@@ -64,7 +64,7 @@ def plot_graphics(graph, parameters, name_save=""):
 	ax3.set_title("Comparação entre as fitness")
 	ax3.set_xlabel("Iterações", fontsize='medium')
 	ax3.set_ylabel("Fitness", fontsize='medium')
-	ax3.plot(list(range(0, parameters['MAX_ITR'], step)), best_ger_step, 'g--', label='Melhor Fitness: %.4f' % graph.best_solution.fitness)
+	ax3.plot(list(range(0, parameters['MAX_ITR'], step)), best_ger_step, 'g--', label='Melhor Fitness: %.4f' % graph.best_global.fitness)
 	ax3.plot(list(range(0, parameters['MAX_ITR'], step)), avg_ger_step, 'r--', label='Media Fitness: %.4f' % graph.avg_fitness)
 	ax3.plot(list(range(0, parameters['MAX_ITR'], step)), median_ger_step, 'b--', label='Mediana Fitness: %.4f' % graph.median_fitness)
 	ax3.legend(ncol=1)
@@ -73,9 +73,9 @@ def plot_graphics(graph, parameters, name_save=""):
 	parameters = "_".join([str(arg) for arg in parameters.values()])
 
 	print(colored("\033[1m"+"-> Graphic saved in: " + 'graficos/'+name_save+parameters+
-				  '_fitness='+str(graph.best_solution.fitness)+'.pdf\n', "green"))
+				  '_fitness='+str(graph.best_global.fitness)+'.pdf\n', "green"))
 
-	fig.savefig('graficos/'+name_save+parameters+'_fitness='+str(graph.best_solution.fitness)+'.pdf')
+	fig.savefig('graficos/'+name_save+parameters+'_fitness='+str(graph.best_global.fitness)+'.pdf')
 
 def plot_table(results, name_save=""):
 
@@ -94,7 +94,7 @@ def plot_table(results, name_save=""):
 		table["NUM_ANTS"].append(i[1]["NUM_ANTS"])
 		table["ALPHA"].append(i[1]["ALPHA"])
 		table["BETA"].append(i[1]["BETA"])
-		table["FITNESS"].append("%.2f" % i[0].best_solution.fitness)
+		table["FITNESS"].append("%.2f" % i[0].best_global.fitness)
 		table["P"].append(i[1]["P"])
 		table["Q"].append(i[1]["Q"])
 

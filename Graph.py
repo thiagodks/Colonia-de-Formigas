@@ -1,5 +1,6 @@
 import random
 import numpy as np
+from Ant import Ant
 
 class Edge:
 
@@ -22,6 +23,7 @@ class Graph:
 		self.adj_matrix = []
 		self.log_itr = []
 		self.ants = []
+		self.best_global = None
 
 	def get_parameters(self):
 		return ("\nNumber of Vertices: " + str(self.num_vertices) +
@@ -78,7 +80,11 @@ class Graph:
 		indiv_fitness = [ant.fitness for ant in self.ants]
 		self.avg_fitness = np.mean(indiv_fitness)
 		self.median_fitness = np.median(indiv_fitness)
-		self.best_solution = min(self.ants, key=lambda a: a.fitness) 
+		self.best_solution = min(self.ants, key=lambda a: a.fitness)
+		if self.best_global == None or (self.best_solution.fitness < self.best_global.fitness):
+			self.best_global = Ant()
+			self.best_global.fitness = self.best_solution.fitness
+			self.best_global.route = self.best_solution.route
 		self.log_itr.append((self.best_solution.fitness, self.avg_fitness, self.median_fitness))
 
 	def clear_routes(self):

@@ -3,7 +3,7 @@ class Ant:
 
 	def __init__(self):
 		self.route = []
-		self.fitness = 0
+		self.fitness = None
 
 	def update_route(self, city):
 		self.route.append(city)

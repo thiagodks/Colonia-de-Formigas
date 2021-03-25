@@ -35,5 +35,5 @@ if __name__ == "__main__":
 			graph.clear_routes()
 
 	print(graph.get_parameters())
-	print("\nBest Solution: ", graph.best_solution)
+	print("\nBest Solution: ", graph.best_global)
 	pc.plot_graphics(graph, parameters)
